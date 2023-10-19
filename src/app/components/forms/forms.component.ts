@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FilterUnitsService } from 'src/app/services/filter-units.service';
 import { GetUnitsService } from 'src/app/services/get-units.service';
 import { Location } from 'src/app/types/location.interface';
 
@@ -11,10 +12,14 @@ import { Location } from 'src/app/types/location.interface';
 export class FormsComponent implements OnInit {
 
   results: Location[] = [];
-  filterResults: Location[] = [];
+  filteredResults: Location[] = [];
   formGroup!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private unitService: GetUnitsService) { }
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private unitService: GetUnitsService, 
+    private filterUnitsServices: FilterUnitsService ) { }
 
   //ngOnInit e como se fosse UseEffet que e utilizado pelo React com o array de dependencia vazio
   ngOnInit(): void {
@@ -23,19 +28,15 @@ export class FormsComponent implements OnInit {
       showClosed: true
     })
     this.unitService.getAllUnits().subscribe(data => {
-        this.results = data.locations;
-        this.filterResults = data.locations;
-    });
-   
+      this.results = data;
+      this.filteredResults = data;
+    })
   }
 
   onSubmit(): void {
-    console.log(this.formGroup.value)
-    if (!this.formGroup.value.showClosed) {
-      this.filterResults = this.results.filter(location => location.opened === true )
-    } else {
-      this.filterResults = this.results;
-    }
+    let { showClosed, hour} = this.formGroup.value
+    this.filteredResults = this.filterUnitsServices.filter(this.results, this.formGroup.value.showClosed, this.formGroup.value.hour);
+    this.unitService.setFilteredUnits(this.filteredResults);
   }
 
   onClean(): void {
