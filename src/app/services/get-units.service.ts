@@ -7,10 +7,11 @@ import { Location } from '../types/location.interface';
 @Injectable({
   providedIn: 'root'
 })
+
 export class GetUnitsService {
   readonly apiUrl = "https://test-frontend-developer.s3.amazonaws.com/data/locations.json";
 
-  private allUnitsSubject: BehaviorSubject<Location[]> = new BehaviorSubject<Location[]>([])
+  private allUnitsSubject: BehaviorSubject<Location[]> = new BehaviorSubject<Location[]>([]);
   private allUnits$: Observable<Location[]> = this.allUnitsSubject.asObservable();
   private filteredUnits: Location[] = [];
 
@@ -25,7 +26,7 @@ export class GetUnitsService {
     return this.allUnits$;
   }
 
-  getFilterUnits() {
+  getFilteredUnits() {
     return this.filteredUnits;
   }
 

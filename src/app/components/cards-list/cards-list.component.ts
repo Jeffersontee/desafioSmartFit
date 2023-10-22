@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { GetUnitsService } from 'src/app/services/get-units.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { Location } from 'src/app/types/location.interface';
 
 @Component({
@@ -7,15 +6,14 @@ import { Location } from 'src/app/types/location.interface';
   templateUrl: './cards-list.component.html',
   styleUrls: ['./cards-list.component.scss']
 })
-export class CardsListComponent  implements OnInit {
-  unitsList: Location[] = [];
+
+export class CardsListComponent implements OnInit {
+  @Input() unitsList: Location[] = [];
   
-  constructor(private unitService: GetUnitsService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.unitsList = this.unitService.getFilterUnits();
-    console.log(this.unitsList);
+    console.log(this.unitsList)
   }
-
 
 }

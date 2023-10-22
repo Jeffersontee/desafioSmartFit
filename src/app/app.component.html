@@ -2,5 +2,6 @@
     <app-header></app-header>
     <app-forms (submitEvent)="onSubmit()"></app-forms>
     <!-- showList não e um booleano behaviorSubject nesse caso e utilzado o | async invest do *ngIf="showList"-->
-    <app-cards-list *ngIf="(showList | async )"></app-cards-list>
+    <!-- Biding sempre utilizar [] para os parametros retorna array vazio com () -->
+    <app-cards-list *ngIf="(showList | async )" [unitsList]="unitsList"></app-cards-list>
 </div>
