@@ -5,4 +5,5 @@
     <!-- showList não e um booleano behaviorSubject nesse caso e utilzado o | async invest do *ngIf="showList"-->
     <!-- Biding sempre utilizar [] para os parametros retorna array vazio com () -->
     <app-cards-list *ngIf="(showList | async )" [unitsList]="unitsList"></app-cards-list>
+    <app-footer></app-footer>
 </div>
